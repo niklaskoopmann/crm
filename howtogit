@@ -1,10 +1,12 @@
 How to GIT:
 
 Vorbereitung:
-cmd -> "git clone https://github.com/niklaskoopmann/crm.git"
+cmd -> "git clone https://github.com/niklaskoopmann/crm.git <PFAD>"
+Vorschlag für <PFAD>: C:\Users\<USERNAME>\Documents\git
+Der Ordnernamen des Pfades dürfen keine Sonderzeichen enthalten.
 
 Änderungen laden:
-cmd -> "git fetch ..."
+cmd -> "git fetch https://github.com/niklaskoopmann/crm.git <PFAD>"
 
 Änderungen vergleichen:
 cmd -> "git commit ..."
