@@ -1,7 +1,7 @@
 How to GIT:
 
 Vorbereitung:
-cmd -> "git clone ..."
+cmd -> "git clone https://github.com/niklaskoopmann/crm.git"
 
 Änderungen laden:
 cmd -> "git fetch ..."
