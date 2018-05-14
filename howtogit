@@ -6,7 +6,7 @@ Vorschlag für <PFAD>: C:\Users\<USERNAME>\Documents\git
 Der Ordnernamen des Pfades dürfen keine Sonderzeichen enthalten.
 
 Änderungen laden:
-cmd -> "git fetch https://github.com/niklaskoopmann/crm.git <PFAD>"
+cmd -> "git pull https://github.com/niklaskoopmann/crm.git <PFAD>"
 
 Änderungen vergleichen:
 cmd -> "git commit" im Ordner mit Projektdateien (!)
