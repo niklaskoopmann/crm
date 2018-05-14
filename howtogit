@@ -8,9 +8,15 @@ Der Ordnernamen des Pfades dürfen keine Sonderzeichen enthalten.
 Änderungen laden:
 cmd -> "git pull https://github.com/niklaskoopmann/crm.git <PFAD>"
 
+Dateien zum Repository hinzufügen:
+cmd -> "git add -A" im Ordner mit Projektdateien (!)
+(alle neuen Dateien)
+
 Änderungen vergleichen:
 cmd -> "git commit" im Ordner mit Projektdateien (!)
 Commit-Note anfügen (Beschreibung der Änderungen)!
 
 Änderungen hochladen:
 cmd -> "git push" im Ordner mit Projektdateien (!)
+
+Verkettung der Befehle durch "&&" möglich.
