@@ -1,0 +1,13 @@
+How to GIT:
+
+Vorbereitung:
+cmd -> "git clone ..."
+
+Änderungen laden:
+cmd -> "git fetch ..."
+
+Änderungen vergleichen:
+cmd -> "git commit ..."
+
+Änderungen hochladen:
+cmd -> "git push ..."
