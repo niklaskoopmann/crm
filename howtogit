@@ -9,7 +9,8 @@ Der Ordnernamen des Pfades dürfen keine Sonderzeichen enthalten.
 cmd -> "git fetch https://github.com/niklaskoopmann/crm.git <PFAD>"
 
 Änderungen vergleichen:
-cmd -> "git commit ..."
+cmd -> "git commit" im Ordner mit Projektdateien (!)
+Commit-Note anfügen (Beschreibung der Änderungen)!
 
 Änderungen hochladen:
-cmd -> "git push ..."
+cmd -> "git push" im Ordner mit Projektdateien (!)
