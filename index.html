@@ -3,6 +3,10 @@
 TO DO:
 erfolgreich JSON parsen
 
+h2669567.stratoserver.net
+
+jsonlint.com to validate json
+
 -->
 <!doctype html>
 <html lang="de">
@@ -12,6 +16,31 @@ erfolgreich JSON parsen
     <link rel="Icon" href="./crm.png">
     <title>Customer Relationship Manager</title>
     <script src="jquery-3.3.1.js"></script>
+    <style type="text/css">
+    * {
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    nav {
+        background-color: #734f4e;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    span {
+        padding: 10px;
+        font-weight: lighter;
+        color: #d0d0d0;
+    }
+
+    footer {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        text-align: center;
+        background-color: #C0C0C0;
+        font-size: 12px;
+    }
+    </style>
 </head>
 
 <body ononline="updateOnline(true)">
@@ -27,20 +56,19 @@ erfolgreich JSON parsen
     <div id="jsontest">
         Name hier:
     </div>
+    <main>
+        Herzlich willkommen in Ihrem Customer Relationship Management System!
+    </main>
 </body>
 <script type="text/javascript">
-
-console.log($.ajax({
+$.ajax({
     url: 'https://randomuser.me/api/',
     dataType: 'json',
     success: function(data) {
-        //console.log(data);
-        alert(data.results[0].name.first);
-        //return data;
+        console.log(data);
+        document.getElementById("jsontest").innerHTML = data.results[0].name.first + ' ' + data.results[0].name.last;
     }
-}));
-
-document.getElementById("jsontest").innerHTML = jason.results[0].name.last;
+});
 </script>
 <footer>
     Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
