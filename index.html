@@ -1,11 +1,17 @@
 <!-- 
 
-TO DO:
-erfolgreich JSON parsen
-
-h2669567.stratoserver.net
+Dokumentenverwaltung:
+h2669567.stratoserver.net:8080/intranet/jsondocs.jsp
 
 jsonlint.com to validate json
+
+http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF for colours
+
+bootstrap 4 filters implementieren
+
+to do:
+- firmenlogo (chiara)
+- 
 
 -->
 <!doctype html>
@@ -14,33 +20,9 @@ jsonlint.com to validate json
 
 <head>
     <link rel="Icon" href="./crm.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Customer Relationship Manager</title>
     <script src="jquery-3.3.1.js"></script>
-    <style type="text/css">
-    * {
-        font-family: Helvetica, Arial, sans-serif;
-    }
-
-    nav {
-        background-color: #734f4e;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    span {
-        padding: 10px;
-        font-weight: lighter;
-        color: #d0d0d0;
-    }
-
-    footer {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        text-align: center;
-        background-color: #C0C0C0;
-        font-size: 12px;
-    }
-    </style>
 </head>
 
 <body ononline="updateOnline(true)">
@@ -53,25 +35,47 @@ jsonlint.com to validate json
         <span>Angebote</span>
         <span>Projekte</span>
     </nav>
-    <div id="jsontest">
-        Name hier:
-    </div>
     <main>
-        Herzlich willkommen in Ihrem Customer Relationship Management System!
+        <p id="welcome">Herzlich willkommen in Ihrem Customer Relationship Management System!</p>
+        <div id="docsbox">
+
+        </div>
+        <div id="personen">
+            <h1>Personen</h1>
+        </div>
     </main>
 </body>
 <script type="text/javascript">
-$.ajax({
+var obj = { "status": "ok", "docs": [{ "id": 1, "name": "Abrechnung Feb18 Lidl/Schwarz", "filename": "testdocument.pdf", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "application/pdf", "bytelength": 18453 }, { "id": 2, "name": "Productbild Florida Pink Grapefruit Artikel-Nr.:32054", "filename": "F32054.jpg", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "image/jpeg", "bytelength": 16989 }] };
+
+obj.docs.forEach(function(element) {
+    console.log(element);
+
+    var h1 = document.createElement("H1");
+
+    var textnode = document.createTextNode(element.name);
+
+    h1.appendChild(textnode);
+
+    document.getElementById("docsbox").appendChild(h1);
+});
+
+/*$.ajax({
     url: 'https://randomuser.me/api/',
     dataType: 'json',
     success: function(data) {
         console.log(data);
         document.getElementById("jsontest").innerHTML = data.results[0].name.first + ' ' + data.results[0].name.last;
     }
-});
+});*/
 </script>
 <footer>
     Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+    <div>
+        <span id="linksfooter">Datenschutz</span>
+        <span id="linksfooter">Impressum</span>
+        <span id="linksfooter">Entwickler</span>
+    </div>
 </footer>
 
 </html>

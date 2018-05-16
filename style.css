@@ -1,0 +1,46 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#docsbox h1 {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 150%;
+    text-decoration: underline;
+}
+
+nav {
+    background-color: #4D0010;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+span {
+    padding: 10px;
+    font-weight: lighter;
+    color: #d0d0d0;
+}
+
+footer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    background-color: #C0C0C0;
+    font-size: 12px;
+}
+
+#linksfooter {
+    color: black;
+    font-size: 80%;
+    padding: 20px;
+}
+
+#welcome {
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Helvetica';
+    padding: 100px;
+    font-size: 150%;
+    text-decoration: underline wavy blue;
+}
