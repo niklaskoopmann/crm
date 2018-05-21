@@ -79,18 +79,16 @@ $.ajax({
     success: function(data) {
         data.results.forEach(function(data) {
             console.log(data);
+            var br = document.createElement("br");
             var person = document.createElement("span");
             person.setAttribute("id", "person");
-            var textnodeRandom = document.createTextNode(data.name.first + ' ' + data.name.last);
-            console.log(textnodeRandom);
-            document.getElementById("people").appendChild(person);
-            document.getElementById("person").appendChild(textnodeRandom);
-            
-            // add image to page
+            var name = document.createTextNode(data.name.first + ' ' + data.name.last);
             var img = new Image();
             img.src = data.picture.medium;
-            console.log(img.src);
-            document.getElementById("person").appendChild(img);
+            img.append(br);
+            person.append(img);
+            person.append(name);
+            document.getElementById("people").appendChild(person);
         })
     }
 });
