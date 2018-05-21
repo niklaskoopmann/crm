@@ -35,12 +35,12 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 
 <body ononline="updateOnline(true)">
     <nav>
-        <span>Aufgaben</span>
-        <span>Termine</span>
-        <span>Personen</span>
-        <span>Firmen</span>
-        <span>Angebote</span>
-        <span>Projekte</span>
+        <span><a href="#tasks">Aufgaben</a></span>
+        <span><a href="#appointments">Termine</a></span>
+        <span><a href="#people">Personen</a></span>
+        <span><a href="#companies">Firmen</a></span>
+        <span><a href="#offers">Angebote</a></span>
+        <span><a href="#projects">Projekte</a></span>
     </nav>
     <main>
         <p id="welcome">
@@ -48,9 +48,13 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
         </p>
         <div id="docsbox">
         </div>
-        <div id="personen">
+        <div id="people">
             <h1>Personen</h1><br>
             
+        </div>
+        
+        <div id="companies">
+            <h1>Firmen</h1><br>
         </div>
     </main>
 </body>
@@ -79,21 +83,15 @@ $.ajax({
             person.setAttribute("id", "person");
             var textnodeRandom = document.createTextNode(data.name.first + ' ' + data.name.last);
             console.log(textnodeRandom);
-            document.getElementById("personen").appendChild(person);
+            document.getElementById("people").appendChild(person);
             document.getElementById("person").appendChild(textnodeRandom);
             
             // add image to page
             var img = new Image();
             img.src = data.picture.medium;
+            console.log(img.src);
+            document.getElementById("person").appendChild(img);
         })
-        
-        
-        /*
-        
-        'image.png';
-        img.onclick = function() {
-            window.location.href = 'http://putyourlocationhere/';
-        }*/
     }
 });
 </script>

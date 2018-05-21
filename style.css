@@ -30,6 +30,11 @@ nav span:hover {
     cursor: pointer;
 }
 
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
 footer {
     padding-top: 30px;
     padding-bottom: 30px;
