@@ -35,7 +35,6 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 
 <body ononline="updateOnline(true)">
     <nav>
-        <span>Neuigkeiten</span>
         <span>Aufgaben</span>
         <span>Termine</span>
         <span>Personen</span>
@@ -50,10 +49,8 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
         <div id="docsbox">
         </div>
         <div id="personen">
-            <h1>Personen</h1>
-            <span id="person">
-                
-            </span>
+            <h1>Personen</h1><br>
+            
         </div>
     </main>
 </body>
@@ -61,7 +58,7 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 var obj = { "status": "ok", "docs": [{ "id": 1, "name": "Abrechnung Feb18 Lidl/Schwarz", "filename": "testdocument.pdf", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "application/pdf", "bytelength": 18453 }, { "id": 2, "name": "Productbild Florida Pink Grapefruit Artikel-Nr.:32054", "filename": "F32054.jpg", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "image/jpeg", "bytelength": 16989 }] };
 
 obj.docs.forEach(function(element) {
-    console.log(element);
+    //console.log(element);
 
     var h1 = document.createElement("H1");
 
@@ -72,14 +69,33 @@ obj.docs.forEach(function(element) {
     document.getElementById("docsbox").appendChild(h1);
 });
 
-/*$.ajax({
-    url: 'https://randomuser.me/api/',
+$.ajax({
+    url: 'https://randomuser.me/api/?results=3',
     dataType: 'json',
     success: function(data) {
-        console.log(data);
-        document.getElementById("jsontest").innerHTML = data.results[0].name.first + ' ' + data.results[0].name.last;
+        data.results.forEach(function(data) {
+            console.log(data);
+            var person = document.createElement("span");
+            person.setAttribute("id", "person");
+            var textnodeRandom = document.createTextNode(data.name.first + ' ' + data.name.last);
+            console.log(textnodeRandom);
+            document.getElementById("personen").appendChild(person);
+            document.getElementById("person").appendChild(textnodeRandom);
+            
+            // add image to page
+            var img = new Image();
+            img.src = data.picture.medium;
+        })
+        
+        
+        /*
+        
+        'image.png';
+        img.onclick = function() {
+            window.location.href = 'http://putyourlocationhere/';
+        }*/
     }
-});*/
+});
 </script>
 <footer>
     <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

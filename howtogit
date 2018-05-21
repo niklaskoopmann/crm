@@ -13,7 +13,7 @@ cmd -> "git add -A" im Ordner mit Projektdateien (!)
 (alle neuen Dateien)
 
 Änderungen vergleichen:
-cmd -> "git commit" im Ordner mit Projektdateien (!)
+cmd -> "git commit -a" im Ordner mit Projektdateien (!)
 Commit-Note anfügen (Beschreibung der Änderungen)!
 
 Änderungen hochladen:

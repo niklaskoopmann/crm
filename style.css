@@ -18,7 +18,7 @@ nav {
     padding-bottom: 5px;
 }
 
-span {
+nav span {
     margin: 5px;
     padding: 5px;
     font-weight: lighter;
@@ -61,4 +61,8 @@ footer {
 
 #iconref {
     margin: 20px;
+}
+
+#person {
+    padding: 10px;
 }
