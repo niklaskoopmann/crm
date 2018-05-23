@@ -49,8 +49,14 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
         <div id="docsbox">
         </div>
         <div id="people">
-            <h1>Personen</h1><br>
-            
+            <div id="people_header">
+                <span id="people_header_span">
+                    <h1>Personen</h1>
+                    <span id="people_btns">
+                        <button type="button" id="add_person">+</button>
+                    </span>
+                </span>
+            </div>
         </div>
         
         <div id="companies">
@@ -74,9 +80,15 @@ obj.docs.forEach(function(element) {
 });
 
 $.ajax({
-    url: 'https://randomuser.me/api/?results=3',
+    url: 'https://randomuser.me/api/?results=15',
     dataType: 'json',
     success: function(data) {
+        if(data.results.length > 0){
+            var removePersonBtn = document.createElement("button");
+            removePersonBtn.setAttribute("id", "remove_person");
+            removePersonBtn.append("-");
+            document.getElementById("people_btns").appendChild(removePersonBtn);
+        }
         data.results.forEach(function(data) {
             console.log(data);
             var br = document.createElement("br");
