@@ -56,11 +56,27 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
                         <button type="button" id="add_person">+</button>
                     </span>
                 </span>
+                <div id="add_person_data">
+                    <p>Person hinzufügen</p>
+                    Name: <input type="text"><br>
+                    Firma: <input type="text"><br>
+                    Telefonnummer: <input type="tel"><br>
+                </div>
             </div>
         </div>
         
         <div id="companies">
             <h1>Firmen</h1><br>
+            <div id="firma">
+                Name: <p id="company_name">Deutsche Bundesbank</p><br>
+                Branche: <p id="company_branch">Finanzdienstleistungen</p><br>
+                Ansprechpartner: <a id="company_contact"></a>
+            </div>
+            <div id="firma">
+                Name: <p id="company_name">Deutsche Bundesbank</p><br>
+                Branche: <p id="company_branch">Finanzdienstleistungen</p><br>
+                Ansprechpartner: <a id="company_contact"></a>
+            </div>
         </div>
     </main>
 </body>
@@ -68,7 +84,6 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 var obj = { "status": "ok", "docs": [{ "id": 1, "name": "Abrechnung Feb18 Lidl/Schwarz", "filename": "testdocument.pdf", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "application/pdf", "bytelength": 18453 }, { "id": 2, "name": "Productbild Florida Pink Grapefruit Artikel-Nr.:32054", "filename": "F32054.jpg", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "image/jpeg", "bytelength": 16989 }] };
 
 obj.docs.forEach(function(element) {
-    //console.log(element);
 
     var h1 = document.createElement("H1");
 
@@ -76,11 +91,11 @@ obj.docs.forEach(function(element) {
 
     h1.appendChild(textnode);
 
-    document.getElementById("docsbox").appendChild(h1);
+    $("#docsbox").append(h1);
 });
 
 $.ajax({
-    url: 'https://randomuser.me/api/?results=15',
+    url: 'https://randomuser.me/api/?results=1',
     dataType: 'json',
     success: function(data) {
         if(data.results.length > 0){
@@ -100,10 +115,17 @@ $.ajax({
             img.append(br);
             person.append(img);
             person.append(name);
-            document.getElementById("people").appendChild(person);
+            $("#people").append(person);
         })
     }
 });
+    // use button to add person
+    var addPerson = document.getElementById("add_person");
+    addPerson.onclick = function(){
+        document.getElementById("remove_person").style.visibility = "hidden";
+        document.getElementById("add_person_data").style.display = "block";
+    };
+    
 </script>
 <footer>
     <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
