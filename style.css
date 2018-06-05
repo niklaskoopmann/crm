@@ -16,6 +16,7 @@ nav {
     background-color: black;
     padding-top: 5px;
     padding-bottom: 5px;
+    white-space: nowrap;
 }
 
 nav span {
@@ -23,6 +24,7 @@ nav span {
     padding: 5px;
     font-weight: lighter;
     color: white;
+    
 }
 
 nav span:hover {
@@ -68,7 +70,7 @@ footer {
     margin: 20px;
 }
 
-#person {
+#event {
     margin: 10px;
     padding: 10px;
     border: 1px solid red;
@@ -95,6 +97,7 @@ footer {
     display: inline;
 }
 
-#add_person_data {
+#add_event_data {
     display: none;
+    padding-bottom: 20px;
 }

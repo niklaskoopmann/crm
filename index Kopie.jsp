@@ -21,8 +21,6 @@ to do:
 
 file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 
-/* @author Chiara Sophie Kramer, Niklas Koopmann, Marcus Kraft (INF17B) */
-
 -->
 <!doctype html>
 <html lang="de">
@@ -30,7 +28,7 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 
 <head>
     <link rel="Icon" href="./crm.png">
-    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Customer Relationship Manager</title>
     <script src="jquery-3.3.1.js"></script>
@@ -39,7 +37,12 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
 
 <body ononline="updateOnline(true)">
     <nav>
-        <span><a href="#events">Events</a></span>
+        <span><a href="#tasks">Aufgaben</a></span>
+        <span><a href="#appointments">Termine</a></span>
+        <span><a href="#people">Personen</a></span>
+        <span><a href="#companies">Firmen</a></span>
+        <span><a href="#offers">Angebote</a></span>
+        <span><a href="#projects">Projekte</a></span>
     </nav>
     <main>
         <p id="welcome">
@@ -51,21 +54,37 @@ file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
         </div>
         <div id="docsbox">
         </div>
-        <div id="events">
-            <div id="events_header">
-                <span id="events_header_span">
-                    <h1>Kommunikationsevents</h1>
-                    <span id="events_btns">
-                        <button type="button" id="add_event">+</button>
+        <div id="people">
+            <div id="people_header">
+                <span id="people_header_span">
+                    <h1>Personen</h1>
+                    <span id="people_btns">
+                        <button type="button" id="add_person">+</button>
                     </span>
                 </span>
-                <form id="add_event_data" name="event_data">
-                    <p>Kommunikationsevent hinzufügen</p>
-                    Name des Kontaktes: <input type="text"><br>
-                    Kontaktweg: <input type="radio" id="contact_tel" name="contact_method"> Telefon <input type="radio" id="contact_mail" name="contact_method"> E-Mail
-                    <button type="button" id="add_event_btn">Hinzufügen</button>
-                    <button type="button" id="abort_add_event_btn">Abbrechen</button>
-                </form>
+                <div id="add_person_data">
+                    <p>Person hinzufügen</p>
+                    Name: <input type="text"><br>
+                    Firma: <input type="text"><br>
+                    Telefonnummer: <input type="tel"><br>
+                    E-Mail-Adresse: <input type="email"><br>
+                    <button type="button" id="add_person_btn">Hinzufügen</button>
+                    <button type="button" id="abort_add_person_btn">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="companies">
+            <h1>Firmen</h1><br>
+            <div id="firma">
+                Name: <p id="company_name">Deutsche Bundesbank</p><br>
+                Branche: <p id="company_branch">Finanzdienstleistungen</p><br>
+                Ansprechpartner: <a id="company_contact"></a>
+            </div>
+            <div id="firma">
+                Name: <p id="company_name">Deutsche Bundesbank</p><br>
+                Branche: <p id="company_branch">Finanzdienstleistungen</p><br>
+                Ansprechpartner: <a id="company_contact"></a>
             </div>
         </div>
     </main>
@@ -117,18 +136,18 @@ $.ajax({
     }
 });
     
-    // use button to add event
-    var addEvent = document.getElementById("add_event");
-    addEvent.onclick = function(){
-        document.getElementById("remove_event").style.visibility = "hidden";
-        document.getElementById("add_event_data").style.display = "block";
+    // use button to add person
+    var addPerson = document.getElementById("add_person");
+    addPerson.onclick = function(){
+        document.getElementById("remove_person").style.visibility = "hidden";
+        document.getElementById("add_person_data").style.display = "block";
     };
     
-    // abort adding event button logic
-    var abortEvent = document.getElementById("abort_add_event_btn");
-    abortEvent.onclick = function(){
-        document.getElementById("remove_event").style.visibility = "visible";
-        document.getElementById("add_event_data").style.display = "none";
+    // abort adding person button logic
+    var abortPerson = document.getElementById("abort_add_person_btn");
+    abortPerson.onclick = function(){
+        document.getElementById("remove_person").style.visibility = "visible";
+        document.getElementById("add_person_data").style.display = "none";
     }
     
 </script>
