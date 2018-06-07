@@ -1,0 +1,169 @@
+<!-- 
+
+Dokumentenverwaltung:
+h2669567.stratoserver.net:8080/intranet/jsondocs.jsp
+
+jsonlint.com to validate json
+
+http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF for colours
+
+bootstrap 4 filters implementieren
+
+http://h2669567.stratoserver.net:8080/intranet/login.jsp login data:
+email: mjanich@me.com
+passwd: 12345
+
+logo: logojoy.com
+
+to do:
+- Kommunikationsevents: Telefonate, Briefe, Mails
+- Richtung der Kommunikation
+
+file:///Applications/Brackets.app/Contents/www/LiveDevelopment/launch.html
+
+/* @author Chiara Sophie Kramer, Niklas Koopmann, Marcus Kraft (INF17B) */
+
+-->
+<!doctype html>
+<html lang="de">
+<meta charset="UTF-8">
+
+<head>
+    <link rel="icon" href="./crm.png">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Customer Relationship Manager</title>
+    <script src="jquery-3.3.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+</head>
+
+<body ononline="updateOnline(true)">
+    <nav>
+        <span><a href="#events">Events</a></span>
+    </nav>
+    <main>
+        <p id="welcome">
+            Herzlich willkommen in Ihrem Customer Relationship Management System!
+        </p>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Danger!</strong> This BS4-alert-box tells you that we had no fucking clue what to do and simply started working on your global requirements...
+        </div>
+        <div id="docsbox">
+        </div>
+        <div id="events">
+            <div id="events_header">
+                <span id="events_header_span">
+                    <h1>Kommunikationsevents</h1>
+                    <span id="events_btns">
+                        <button type="button" id="add_event">+</button>
+                    </span>
+                </span>
+                <form id="add_event_data" name="event_data">
+                    <p>Kommunikationsevent hinzufügen</p>
+                    Name des Kontaktes: <input type="text"><br>
+                    Kontaktweg: <input type="radio" id="contact_tel" name="contact_method"> Telefon <input type="radio" id="contact_mail" name="contact_method"> E-Mail
+                    <button type="button" id="add_event_btn">Hinzufügen</button>
+                    <button type="button" id="abort_add_event_btn">Abbrechen</button>
+                </form>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <p style="font-size: 1000%">&phone;</p>
+                    <div class="card-body">
+                        <h5 class="card-title">Anruf</h5>
+                        <p class="card-text">Kunde x wurde angerufen.</p>
+                        <p class="card-text"><small class="text-muted">Notizen: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <p style="font-size: 1000%">&#x2709;</p>
+                    <div class="card-body">
+                        <h5 class="card-title">E-Mail</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                        <p class="card-text"><small class="text-muted">Notizen: ...</small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <p style="font-size: 1000%">&#x1f310;</p>
+                    <div class="card-body">
+                        <h5 class="card-title">Kontaktformular</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                
+                <div id=""></div>
+            </div>
+        </div>
+    </main>
+</body>
+<script type="text/javascript">
+var obj = { "status": "ok", "docs": [{ "id": 1, "name": "Abrechnung Feb18 Lidl/Schwarz", "filename": "testdocument.pdf", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "application/pdf", "bytelength": 18453 }, { "id": 2, "name": "Productbild Florida Pink Grapefruit Artikel-Nr.:32054", "filename": "F32054.jpg", "owner": { "id": 1, "firstname": "Michael", "lastname": "Janich", "role": 0 }, "tags": [{ "id": 9, "category": "Kategorie", "label": "DRINGEND" }, { "id": 6, "category": "Kunde", "label": "LidlSchwarz" }, { "id": 2, "category": "Abteilung", "label": "Buchhaltung" }], "creationDate": "Mar 8, 2018 2:45:30 PM", "mimetype": "image/jpeg", "bytelength": 16989 }] };
+
+obj.docs.forEach(function(element) {
+
+    var h1 = document.createElement("H1");
+
+    var textnode = document.createTextNode(element.name);
+
+    h1.appendChild(textnode);
+
+    $("#docsbox").append(h1);
+});
+
+$.ajax({
+    url: 'https://randomuser.me/api/?results=1',
+    dataType: 'json',
+    success: function(data) {
+        if(data.results.length > 0){
+            var removePersonBtn = document.createElement("button");
+            removePersonBtn.setAttribute("id", "remove_person");
+            removePersonBtn.append("-");
+            document.getElementById("people_btns").appendChild(removePersonBtn);
+        }
+        data.results.forEach(function(data) {
+            console.log(data);
+            var br = document.createElement("br");
+            var person = document.createElement("span");
+            person.setAttribute("id", "person");
+            var name = document.createTextNode(data.name.first + ' ' + data.name.last);
+            var img = new Image();
+            img.src = data.picture.medium;
+            img.append(br);
+            person.append(img);
+            person.append(name);
+            $("#people").append(person);
+        })
+    }
+});
+
+$.get("", function(data, status){
+   console.log("Data: " + data + "\nStatus :" + status); 
+});
+    
+    // use button to add event
+    var addEvent = document.getElementById("add_event");
+    addEvent.onclick = function(){
+        document.getElementById("remove_event").style.visibility = "hidden";
+        document.getElementById("add_event_data").style.display = "block";
+    };
+    
+    // abort adding event button logic
+    var abortEvent = document.getElementById("abort_add_event_btn");
+    abortEvent.onclick = function(){
+        document.getElementById("remove_event").style.visibility = "visible";
+        document.getElementById("add_event_data").style.display = "none";
+    }
+    
+</script>
+<footer>
+    <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    <div>
+        <span id="linksfooter">Datenschutz</span>
+        <span id="linksfooter">Impressum</span>
+        <span id="linksfooter">Entwickler</span>
+    </div>
+</footer>
+
+</html>
