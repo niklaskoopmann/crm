@@ -2,6 +2,13 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
+.backgroundgrad{
+    background-image: linear-gradient(white, black);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
 #docsbox h1 {
     border-bottom: none;
 }
@@ -13,7 +20,6 @@ h1 {
 }
 
 nav {
-    background-color: black;
     padding-top: 5px;
     padding-bottom: 5px;
     white-space: nowrap;
@@ -30,6 +36,7 @@ nav span {
 nav span:hover {
     background-color: green;
     cursor: pointer;
+    color: white;
 }
 
 nav a {
@@ -37,11 +44,14 @@ nav a {
     text-decoration: none;
 }
 
+a:hover{
+    color: white;
+}
+
 footer {
     padding-top: 30px;
     padding-bottom: 30px;
     text-align: center;
-    background-color: #C0C0C0;
     font-size: 12px;
 }
 
@@ -100,4 +110,18 @@ footer {
 #add_event_data {
     display: none;
     padding-bottom: 20px;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+
+}
+
+header img {
+    display: block;
+    margin: 0 auto;
 }
