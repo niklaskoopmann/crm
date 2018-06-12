@@ -3,7 +3,7 @@
 }
 
 .backgroundgrad{
-    background-image: linear-gradient(white, black);
+    background-image: linear-gradient(lightgray, white);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -124,4 +124,8 @@ pre {
 header img {
     display: block;
     margin: 0 auto;
+}
+
+#events_loaded {
+    display: none;
 }

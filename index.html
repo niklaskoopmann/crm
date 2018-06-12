@@ -15,19 +15,26 @@
             <nav>
                 <span><a href="#events">Events</a></span>
             </nav>
+            <div class="alert alert-info" id="events_loading">
+                <strong>Info!</strong> Events werden geladen...
+            </div>
+            <div class="alert alert-success alert-dismissible" id="events_loaded">
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> Events erfolgreich geladen.
+            </div>
         </header>
         <main class="backgroundgrad">
             <button type="button" id="add_card" onclick="showAddEventForm()">Event hinzufügen</button>
             <form id="add_event_data" name="event_data">
                 <p>Kommunikationsevent hinzufügen</p>
-                Name des Kontaktes: <input type="text" id="contact_name" maxlength=80><br>
-                Kontaktweg: <input type="radio" id="contact_tel" name="contact_method"> Telefon <input type="radio" id="contact_mail" name="contact_method"> E-Mail<br>
+                Name des Kontaktes: <input type="text" id="contact_name" maxlength=80 name="customer_name"><br>
+                Kontaktweg: <input type="radio" id="contact_tel" name="contact_method[]"> Telefon <input type="radio" id="contact_mail" name="contact_method[]"> E-Mail<br>
                 Datum und Uhrzeit: <input type="date" id="contact_date"><input type="time" id="contact_time"><br>
-                Bearbeitet von: <input type="text" id="contact_internal"><br>
+                Bearbeitet von: <input type="text" id="contact_internal" name="user"><br>
                 Notizen: <textarea id="contact_notes" rows="4"></textarea><br>
-                <button type="button" id="add_event_btn">Hinzufügen</button>
+                <input type="submit" id="add_event_btn" value="Hinzufügen">
                 <button type="button" id="abort_add_event_btn" onclick="hideAddEventForm()">Abbrechen</button>
-                <button type="button" id="reset_form">Zurücksetzen</button> <!-- INLINE JS POSSIBLE? -->
+                <button type="button" id="reset_form" onclick="resetAddEventForm()">Zurücksetzen</button> <!-- INLINE JS POSSIBLE? -->
             </form>
             <div class="card-deck" id="bs4cards">
                 <!--div class="card">
@@ -45,6 +52,9 @@
         </footer>
     </body>
     <script type="text/javascript">
+        
+        var custcommJSON;
+        
         function createBS4card(data){ // update card appending using jquery (see display notes 22 lines below)
             
             // create div for card
@@ -76,11 +86,10 @@
             return currentCard;
         }
         
-        function addButtonsToCard(card){
-            var cardEditButton = $("<button type='button' id='edit-card-button'>").text("Bearbeiten");
-            var cardDeleteButton = $("<button type='button' id='delete-card-button'>").text("Löschen");
-            var divButtons = $("<div id='card-buttons'>").append(cardEditButton, cardDeleteButton);
-            $(card).append(divButtons);
+        function addButtonsToCard(card, data){
+            var divButtons = $(card).append("<div id='card-buttons'>");
+            $("#card-buttons").append("<button type='button' id='edit-card-button' onclick='editCardDetails(data)'>Bearbeiten</button>").append("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
+            //$(card).append(divButtons);
             return card;
         }
         
@@ -96,16 +105,55 @@
         }
         
         function resetAddEventForm(){
-            $("#reset_form").click(function(){$("#add_event_data")[0].reset();});
+            $("#add_event_data")[0].reset();
         }
+        
+        function editCardDetails(data){
+            alert("Löppt.");
+            showAddEventForm();
+            $("#contact_name").val(data.customer.name);
+            if(data.type == 2) $("#contact_tel").prop("checked", true);
+            else if(data.type == 3) $("#contact_mail").prop("checked", true);
+            else{
+                $("#contact_tel").prop("checked", false);
+                $("#contact_mail").prop("checked", false);
+            }
+            $("#contact_date").val(data.date); // json element matching?
+            $("#contact_time").vat(data.time); // json element matching?
+            $("#contact_internal").val(data.stuff) // CHANGE!!!
+            
+        }
+        
+        function deleteCard(){
+            
+        }
+        
+        // create JSON from form input
+        $("#add_event_data").submit(function(data){
+            var updateJSON = $(this).serializeArray();
+            console.log(updateJSON);
+            
+            // post to server
+            /*$.ajax({
+            type: "POST",
+            url: "http://h2669567.stratoserver.net:8080/intranet/update.jsp?action=newevent",
+            data: {
+                customer.name : $("#contact_name").val();
+            },
+            */
+            data.preventDefault();
+        });
         
         $.get("http://h2669567.stratoserver.net:8080/intranet/jsoncustcomm.jsp", function(data, status){
             console.log("Data: " + data + "\nStatus :" + status); // DEBUG
             $(".card-title").text(data.custcomm[0].customer.name); // customer in card title
+            custcommJSON = data;
             data.custcomm.forEach(function(data){
                 var cardWithData = createBS4card(data);
-                var cardWithButtons = addButtonsToCard(cardWithData);
+                var cardWithButtons = addButtonsToCard(cardWithData, data);
                 $("#bs4cards").append(cardWithButtons);
+                $("#events_loading").fadeOut();
+                $("#events_loaded").fadeIn();
             });
         });
         
