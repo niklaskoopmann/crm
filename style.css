@@ -126,6 +126,16 @@ header img {
     margin: 0 auto;
 }
 
-#events_loaded {
-    display: none;
+.column {
+    float: left;
+    width: 40%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.row:after {
+    margin: 10px;
+    content: "";
+    display: table;
+    clear: both;
 }

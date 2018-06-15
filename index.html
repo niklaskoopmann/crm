@@ -1,162 +1,244 @@
 <!doctype html>
 <html lang="de">
-    <meta charset="utf-8">
-    <head>
-        <title>Customer Relationship Manager</title>
-        <!-- ICON --><link rel="icon" href="./crm.png">
-        <!-- BS4 CSS --><link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <!-- JQUERY 3.3.1 --><script src="jquery-3.3.1.js"></script>
-        <!-- BS4 JS --><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
-        <!-- OWN CSS --><link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body ononline="updateOnline(true)">
-        <header>
-            <img alt="Logo DHBW Mosbach" src="http://www.mosbach.dhbw.de/fileadmin/_t3t/img/dhbw_mosbach_2014.gif">
-            <nav>
-                <span><a href="#events">Events</a></span>
-            </nav>
-            <div class="alert alert-info" id="events_loading">
-                <strong>Info!</strong> Events werden geladen...
+<meta charset="utf-8">
+
+<head>
+    <title>Customer Relationship Manager</title>
+    <!-- ICON -->
+    <link rel="icon" href="./crm.png">
+    <!-- BS4 CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- JQUERY 3.3.1 -->
+    <script src="jquery-3.3.1.js"></script>
+    <!-- BS4 JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+    <!-- OWN CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body ononline="updateOnline(true)">
+    <header>
+        <img alt="Logo DHBW Mosbach" src="http://www.mosbach.dhbw.de/fileadmin/_t3t/img/dhbw_mosbach_2014.gif">
+        <nav>
+            <span><a href="#events">Events</a></span>
+        </nav>
+        <div id="alertbox">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+    </header>
+    <main class="backgroundgrad">
+        <button onclick="listView()"> List</button>
+        <button onclick="gridView()"> Grid</button>
+        <button type="button" id="add_card" onclick="showAddEventForm()">Event hinzufügen</button>
+        <form id="add_event_data" name="event_data">
+            <p>Kommunikationsevent hinzufügen</p>
+            Name des Kontaktes: <input type="text" id="contact_name" maxlength=80 name="customer_name"><br> Kontaktweg: <input type="radio" id="contact_tel" name="contact_method[]"> Telefon <input type="radio" id="contact_mail" name="contact_method[]"> E-Mail<br> Datum und Uhrzeit: <input type="datetime-local" id="contact_datetime"><br> Bearbeitet von: <input type="text" id="contact_internal" name="user"><br> Notizen: <textarea id="contact_notes" rows="4"></textarea><br>
+            <input type="submit" id="add_event_btn" value="Hinzufügen">
+            <button type="button" id="abort_add_event_btn" onclick="hideAddEventForm()">Abbrechen</button>
+            <button type="button" id="reset_form" onclick="resetAddEventForm()">Zurücksetzen</button>
+            <!-- INLINE JS POSSIBLE? -->
+        </form>
+        <div class="row" id="bs4cards">
+
+        </div>
+        <div class="row">
+            <div class="column">
+                <h2>Column 1</h2>
+                <p>Some text..</p>
             </div>
-            <div class="alert alert-success alert-dismissible" id="events_loaded">
-                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Success!</strong> Events erfolgreich geladen.
+            <div class="column">
+                <h2>Column 2</h2>
+                <p>Some text..</p>
             </div>
-        </header>
-        <main class="backgroundgrad">
-            <button type="button" id="add_card" onclick="showAddEventForm()">Event hinzufügen</button>
-            <form id="add_event_data" name="event_data">
-                <p>Kommunikationsevent hinzufügen</p>
-                Name des Kontaktes: <input type="text" id="contact_name" maxlength=80 name="customer_name"><br>
-                Kontaktweg: <input type="radio" id="contact_tel" name="contact_method[]"> Telefon <input type="radio" id="contact_mail" name="contact_method[]"> E-Mail<br>
-                Datum und Uhrzeit: <input type="date" id="contact_date"><input type="time" id="contact_time"><br>
-                Bearbeitet von: <input type="text" id="contact_internal" name="user"><br>
-                Notizen: <textarea id="contact_notes" rows="4"></textarea><br>
-                <input type="submit" id="add_event_btn" value="Hinzufügen">
-                <button type="button" id="abort_add_event_btn" onclick="hideAddEventForm()">Abbrechen</button>
-                <button type="button" id="reset_form" onclick="resetAddEventForm()">Zurücksetzen</button> <!-- INLINE JS POSSIBLE? -->
-            </form>
-            <div class="card-deck" id="bs4cards">
-                <!--div class="card">
-                    <p class="card-symbol">&phone;</p>
-                    <div class="card-body">
-                        <h5 class="card-title">Anruf</h5>
-                        <p class="card-text">Kunde x wurde angerufen.</p>
-                        <p class="card-text"><small class="text-muted">Notizen: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</small></p>
-                    </div>
-                </div-->
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <h2>Column 3</h2>
+                <p>Some text..</p>
             </div>
-        </main>
-        <footer class="backgroundgrad">
-            <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-        </footer>
-    </body>
-    <script type="text/javascript">
-        
-        var custcommJSON;
-        
-        function createBS4card(data){ // update card appending using jquery (see display notes 22 lines below)
-            
-            // create div for card
-            var currentCard = document.createElement("div");
-            currentCard.setAttribute("class", "card");
-            
-            // card header (customer)
-            var currentCardCustomer = document.createElement("h5");
-            currentCardCustomer.setAttribute("class", "card-title");
-            var currentCardCustomerName = document.createTextNode(data.customer.name);
-            currentCardCustomer.append(currentCardCustomerName);
-            
-            // set communication type in card
-            var currentCardCommTypeText = document.createElement("div");
-            currentCardCommTypeText.setAttribute("class", "card-text");
-            var commType = "";
-            if(data.type == 2) commType = "Anruf";
-            else if(data.type == 3) commType = "E-Mail";
-            else commType = "Andere";
-            var currentCardCommType = document.createTextNode(commType);
-            currentCardCommTypeText.append(currentCardCommType);
-            
-            // display notes
-            var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> to interpret newline
-            
-            // append all to card
-            $(currentCard).append(currentCardCustomer, currentCardCommTypeText, currentCardNote);
-            
-            return currentCard;
+            <div class="column">
+                <h2>Column 4</h2>
+                <p>Some text..</p>
+            </div>
+        </div>
+    </main>
+    <footer class="backgroundgrad">
+        <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    </footer>
+</body>
+<script type="text/javascript">
+    getData();
+    notification("info", "Daten geladen.");
+
+    var custcommJSON;
+    var custcommId = 0;
+
+    //switch list grid view
+    // Get the elements with class="column"
+    var elements = document.getElementsByClassName("column");
+
+    // List View
+    function listView() {
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.width = "100%";
         }
-        
-        function addButtonsToCard(card, data){
-            var divButtons = $(card).append("<div id='card-buttons'>");
-            $("#card-buttons").append("<button type='button' id='edit-card-button' onclick='editCardDetails(data)'>Bearbeiten</button>").append("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
-            //$(card).append(divButtons);
-            return card;
+        notification("success", "Ansicht geändert.");
+    }
+
+    // Grid View
+    function gridView() {
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.width = "40%";
         }
-        
-        function showAddEventForm(){
-            $("#add_event_data").css("display", "block");
-            $('#add_card').css("visibility", "hidden");
+    }
+
+    function createBS4card(data) { // update card appending using jquery (see display notes 22 lines below)
+
+        // create div for card
+        var currentCard = document.createElement("div");
+        currentCard.setAttribute("class", "card column");
+
+        // card header (customer)
+        var currentCardCustomer = document.createElement("h5");
+        currentCardCustomer.setAttribute("class", "card-title");
+        var currentCardCustomerName = document.createTextNode(data.customer.name);
+        currentCardCustomer.append(currentCardCustomerName);
+
+        // set communication type in card
+        var currentCardCommTypeText = document.createElement("div");
+        currentCardCommTypeText.setAttribute("class", "card-text");
+        var commType = "";
+        if (data.type == 2) commType = "Anruf";
+        else if (data.type == 3) commType = "E-Mail";
+        else commType = "Andere";
+        var currentCardCommType = document.createTextNode(commType);
+        currentCardCommTypeText.append(currentCardCommType);
+
+        // display notes
+        var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> to interpret newline
+
+        // append all to card
+        $(currentCard).append(currentCardCustomer, currentCardCommTypeText, currentCardNote);
+
+        return currentCard;
+    }
+
+    function addButtonsToCard(card, data) {
+        var divButtons = $(card).append("<div id='card-buttons'>");
+        $("#card-buttons").append("<button type='button' id='edit-card-button' onclick='editCardDetails(data)'>Bearbeiten</button>").append("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
+        //$(card).append(divButtons);
+        return card;
+    }
+
+    function showAddEventForm() {
+        $("#add_event_data").css("display", "block");
+        $('#add_card').css("visibility", "hidden");
+    }
+
+    function hideAddEventForm() {
+        $("#add_event_data").css("display", "none");
+        $("#add_card").css("visibility", "visible");
+        resetAddEventForm();
+    }
+
+    function resetAddEventForm() {
+        $("#add_event_data")[0].reset();
+    }
+
+    function editCardDetails(data) {
+        alert("Löppt.");
+        showAddEventForm();
+        $("#contact_name").val(data.customer.name);
+        if (data.type == 2) $("#contact_tel").prop("checked", true);
+        else if (data.type == 3) $("#contact_mail").prop("checked", true);
+        else {
+            $("#contact_tel").prop("checked", false);
+            $("#contact_mail").prop("checked", false);
         }
-        
-        function hideAddEventForm(){
-            $("#add_event_data").css("display", "none");
-            $("#add_card").css("visibility", "visible");
-            resetAddEventForm();
+        $("#contact_datetime").val(data.commDate);
+        $("#contact_internal").val(data.stuff); // CHANGE!!!
+
+    }
+
+    function deleteCard() {
+
+    }
+
+    function notification(type, msg) {
+        var box = document.getElementById("alertbox");
+        box.innerHTML = "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+        switch (type) {
+            case "success":
+                box.setAttribute("class", "alert alert-success alert-dismissible");
+                box.innerHTML += ("<strong>Erfolg! </strong> " + msg);
+                break;
+            case "info":
+                box.setAttribute("class", "alert alert-info alert-dismissible");
+                box.innerHTML += ("<strong>Info! </strong> " + msg);
+                break;
+            case "error":
+                box.setAttribute("class", "alert alert-danger alert-dismissible");
+                box.innerHTML += ("<strong>Fehler! </strong> " + msg);
+                break;
+            default:
+                alert("Error in notification(type, msg)!");
+                break;
         }
-        
-        function resetAddEventForm(){
-            $("#add_event_data")[0].reset();
-        }
-        
-        function editCardDetails(data){
-            alert("Löppt.");
-            showAddEventForm();
-            $("#contact_name").val(data.customer.name);
-            if(data.type == 2) $("#contact_tel").prop("checked", true);
-            else if(data.type == 3) $("#contact_mail").prop("checked", true);
-            else{
-                $("#contact_tel").prop("checked", false);
-                $("#contact_mail").prop("checked", false);
-            }
-            $("#contact_date").val(data.date); // json element matching?
-            $("#contact_time").vat(data.time); // json element matching?
-            $("#contact_internal").val(data.stuff) // CHANGE!!!
-            
-        }
-        
-        function deleteCard(){
-            
-        }
-        
-        // create JSON from form input
-        $("#add_event_data").submit(function(data){
-            var updateJSON = $(this).serializeArray();
-            console.log(updateJSON);
-            
-            // post to server
-            /*$.ajax({
+    }
+
+    // create JSON from form input
+    $("#add_event_data").submit(function(data) {
+        var updateJSON = $(this).serializeArray();
+        console.log(updateJSON);
+
+        // decide communication type
+        var commType = 0;
+        if ($("#contact_tel").prop("checked", true)) commType = 2;
+        else if ($("#contact_mail").prop("checked", true)) commType = 3;
+
+        // customer element
+        var customer = {
+            "id": "1",
+            "name": $("#contact_name").val(),
+            "type": "1"
+        };
+
+        // post to server
+        $.ajax({
             type: "POST",
-            url: "http://h2669567.stratoserver.net:8080/intranet/update.jsp?action=newevent",
+            url: "http://h2669567.stratoserver.net:8080/intranet/update.jsp?action=newcustcomm",
             data: {
-                customer.name : $("#contact_name").val();
+                id: custcommId,
+                customer: customer,
+                type: commType,
+                commDate: $("#contact_datetime").val(),
+                details: $("#contact_notes").val()
             },
-            */
-            data.preventDefault();
+            success: function(msg) {
+                console.log(msg);
+                //getData();
+            }
         });
-        
-        $.get("http://h2669567.stratoserver.net:8080/intranet/jsoncustcomm.jsp", function(data, status){
+    });
+
+    function getData() {
+        $.get("http://h2669567.stratoserver.net:8080/intranet/jsoncustcomm.jsp", function(data, status) {
+            if (data.status != "ok") {
+                create_Error(data.status);
+            }
             console.log("Data: " + data + "\nStatus :" + status); // DEBUG
             $(".card-title").text(data.custcomm[0].customer.name); // customer in card title
             custcommJSON = data;
-            data.custcomm.forEach(function(data){
+            custcommId = 0;
+            data.custcomm.forEach(function(data) {
+                custcommId++;
                 var cardWithData = createBS4card(data);
                 var cardWithButtons = addButtonsToCard(cardWithData, data);
                 $("#bs4cards").append(cardWithButtons);
-                $("#events_loading").fadeOut();
-                $("#events_loaded").fadeIn();
             });
         });
-        
-        
-    </script>
+    }
+</script>
+
 </html>
