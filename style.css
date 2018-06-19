@@ -128,9 +128,9 @@ header img {
 
 .column {
     float: left;
-    width: 40%;
+    width: 7cm;
     padding: 10px;
-    margin: 0 auto;
+    margin: 2%;
 }
 
 .row:after {
@@ -138,4 +138,14 @@ header img {
     content: "";
     display: table;
     clear: both;
+}
+
+.card {
+    position: relative;
+}
+
+.card button {
+    position: relative;
+    bottom: 0px;
+    margin: 5px;
 }

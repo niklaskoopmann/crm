@@ -27,6 +27,7 @@
         </div>
     </header>
     <main class="backgroundgrad">
+        <input class="form-control" id="searchbar" type="text" placeholder="Search Communication...">
         <button onclick="listView()"> List</button>
         <button onclick="gridView()"> Grid</button>
         <button type="button" id="add_card" onclick="showAddEventForm()">Event hinzufügen</button>
@@ -39,7 +40,11 @@
             <!-- INLINE JS POSSIBLE? -->
         </form>
         <div class="row" id="bs4cards">
-
+            <div class="card column" id="hardcoded">
+                <h5 class="card-title">Hardcoded Test Company</h5>
+                <div class="card-text">Anruf</div>
+                <div class="card-text"><small class="text-muted">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</small></div>
+            </div>
         </div>
         <div class="row">
             <div class="column">
@@ -70,11 +75,12 @@
 <script type="text/javascript">
     getData();
     notification("info", "Daten geladen.");
+    addButtonsToCard(hardcoded, null);
 
     var custcommJSON;
     var custcommId = 0;
 
-    //switch list grid view
+    // switch list grid view
     // Get the elements with class="column"
     var elements = document.getElementsByClassName("column");
 
@@ -83,7 +89,7 @@
         for (var i = 0; i < elements.length; i++) {
             elements[i].style.width = "100%";
         }
-        notification("success", "Ansicht geändert.");
+        notification("success", "Hurra! Liste!");
     }
 
     // Grid View
@@ -91,6 +97,7 @@
         for (var i = 0; i < elements.length; i++) {
             elements[i].style.width = "40%";
         }
+        notification("success", "Hurra! Kacheln!");
     }
 
     function createBS4card(data) { // update card appending using jquery (see display notes 22 lines below)
@@ -116,7 +123,7 @@
         currentCardCommTypeText.append(currentCardCommType);
 
         // display notes
-        var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> to interpret newline
+        var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> used to correctly interpret newline
 
         // append all to card
         $(currentCard).append(currentCardCustomer, currentCardCommTypeText, currentCardNote);
@@ -124,10 +131,13 @@
         return currentCard;
     }
 
-    function addButtonsToCard(card, data) {
-        var divButtons = $(card).append("<div id='card-buttons'>");
-        $("#card-buttons").append("<button type='button' id='edit-card-button' onclick='editCardDetails(data)'>Bearbeiten</button>").append("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
-        //$(card).append(divButtons);
+    function addButtonsToCard(card) {
+        var divButtons = $("<div>").attr("id", "card-buttons");
+        var editButton = $("<button type='button' id='edit-card-button' onclick='editCardDetails()'>Bearbeiten</button>");
+        var delButton = $("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
+        $(divButtons).append(editButton);
+        $(divButtons).append(delButton);
+        $(card).append(divButtons);
         return card;
     }
 
@@ -146,24 +156,28 @@
         $("#add_event_data")[0].reset();
     }
 
-    function editCardDetails(data) {
-        alert("Löppt.");
-        showAddEventForm();
-        $("#contact_name").val(data.customer.name);
-        if (data.type == 2) $("#contact_tel").prop("checked", true);
-        else if (data.type == 3) $("#contact_mail").prop("checked", true);
-        else {
-            $("#contact_tel").prop("checked", false);
-            $("#contact_mail").prop("checked", false);
+    function editCardDetails() {
+        var editedCardChildren = $(event.target).parent().parent().children();
+        for(var i = 0; i < editedCardChildren.length; i ++){
+            console.log(editedCardChildren[i].innerText);
+            var textField = $("<input type='text'>").val(editedCardChildren[i].innerText);
+            editedCardChildren.parent().append(textField);
         }
-        $("#contact_datetime").val(data.commDate);
-        $("#contact_internal").val(data.stuff); // CHANGE!!!
-
     }
 
     function deleteCard() {
 
     }
+
+    // search bar logic
+    $(document).ready(function() {
+        $("#searchbar").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#bs4cards card").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     function notification(type, msg) {
         var box = document.getElementById("alertbox");
@@ -187,7 +201,7 @@
         }
     }
 
-    // create JSON from form input
+    // post to server on submit
     $("#add_event_data").submit(function(data) {
         var updateJSON = $(this).serializeArray();
         console.log(updateJSON);
@@ -208,6 +222,7 @@
         $.ajax({
             type: "POST",
             url: "http://h2669567.stratoserver.net:8080/intranet/update.jsp?action=newcustcomm",
+            cache: false,
             data: {
                 id: custcommId,
                 customer: customer,
@@ -215,8 +230,10 @@
                 commDate: $("#contact_datetime").val(),
                 details: $("#contact_notes").val()
             },
-            success: function(msg) {
+            success: function(msg, status, jqXHR) {
                 console.log(msg);
+                console.log(status);
+                console.log(jqXHR);
                 //getData();
             }
         });
@@ -225,7 +242,7 @@
     function getData() {
         $.get("http://h2669567.stratoserver.net:8080/intranet/jsoncustcomm.jsp", function(data, status) {
             if (data.status != "ok") {
-                create_Error(data.status);
+                create_Error(data.status); // to do
             }
             console.log("Data: " + data + "\nStatus :" + status); // DEBUG
             $(".card-title").text(data.custcomm[0].customer.name); // customer in card title
