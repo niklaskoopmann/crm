@@ -173,8 +173,8 @@
         $($(editedCardChildren[0]).children()[1]).replaceWith(textField);
         
         var radioButtonsCommType = $("<div id='edit-card-commtype-radio-group'>");    
-        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-tel'>").text("Telefon"));
-        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-mail>").text("E-Mail"));
+        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-tel'><label for='edit-commtype-tel'>Telefon</label>"));
+        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-mail'><label for='edit-commtype-mail'>E-Mail</label>"));
         
         $($(editedCardChildren[1]).children()[1]).replaceWith(radioButtonsCommType);
         if(cardDetailsBackup[1] == "Anruf") $("#edit-commtype-tel").prop("checked", true);

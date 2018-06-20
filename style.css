@@ -153,4 +153,5 @@ header img {
 .card td {
     padding-left: 10px;
     padding-right: 10px;
+    vertical-align: top;
 }
