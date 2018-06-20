@@ -103,30 +103,39 @@
     function createBS4card(data) { // update card appending using jquery (see display notes 22 lines below)
 
         // create div for card
-        var currentCard = document.createElement("div");
-        currentCard.setAttribute("class", "card column");
+        //var currentCard = document.createElement("div");
+        //currentCard.setAttribute("class", "card column");
+        var currentCard = $("<div>").addClass("card column");
+        
+        // table for card
+        var cardTable = $("<table>").attr("id", "card_table");
 
         // card header (customer)
-        var currentCardCustomer = document.createElement("h5");
-        currentCardCustomer.setAttribute("class", "card-title");
-        var currentCardCustomerName = document.createTextNode(data.customer.name);
-        currentCardCustomer.append(currentCardCustomerName);
+        cardTable.append($("<tr id='customer-name'><td>Name:</td><td>" + data.customer.name + "</td></tr>"));
 
         // set communication type in card
-        var currentCardCommTypeText = document.createElement("div");
-        currentCardCommTypeText.setAttribute("class", "card-text");
         var commType = "";
         if (data.type == 2) commType = "Anruf";
         else if (data.type == 3) commType = "E-Mail";
         else commType = "Andere";
-        var currentCardCommType = document.createTextNode(commType);
-        currentCardCommTypeText.append(currentCardCommType);
+        cardTable.append($("<tr id='customer-commtype'><td>CommType:</td><td>" + commType + "</td></tr>"));
+        
+        // display customer type
+        var custType = "";
+        if(data.customer.type == 1) custType = "bereits Kunde";
+        else if(data.customer.type == 2) custType = "voraussichtlicher Kunde";
+        else custType = "Andere";
+        cardTable.append($("<tr id='customer-type'><td>Art:</td><td>" + custType + "</td></tr>"));
+        
+        // display communication date
+        cardTable.append($("<tr id='customer-datetime'><td>Datum und Uhrzeit:</td><td>" + data.commDate + "</td></tr>"));
 
         // display notes
-        var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> used to correctly interpret newline
+        cardTable.append($("<tr id='customer-name'><td>Notizen/Inhalt:</td><td><pre class='card-text'><small class = 'text-muted'>" + data.details + "</small></pre></td></tr>"));
+        //var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> used to correctly interpret newline
 
         // append all to card
-        $(currentCard).append(currentCardCustomer, currentCardCommTypeText, currentCardNote);
+        $(currentCard).append(cardTable);
 
         return currentCard;
     }
@@ -156,13 +165,30 @@
         $("#add_event_data")[0].reset();
     }
 
+    // edit card button logic
+    var cardDetailsBackup = [];
     function editCardDetails() {
-        var editedCardChildren = $(event.target).parent().parent().children();
+        var editedCardChildren = $(event.target).parent().parent().find("#card_table").children();
         for(var i = 0; i < editedCardChildren.length; i ++){
-            console.log(editedCardChildren[i].innerText);
-            var textField = $("<input type='text'>").val(editedCardChildren[i].innerText);
-            editedCardChildren.parent().append(textField);
+            var fieldData = $(editedCardChildren[i]).children()[1].innerText;
+            cardDetailsBackup[i] = fieldData;
+            var textField = $("<input type='text'>").val(fieldData);
+            $($(editedCardChildren[i]).children()[1]).replaceWith(textField);
         }
+        editedCardChildren.parent().parent().find("#edit-card-button").hide();
+        editedCardChildren.parent().parent().find("#delete-card-button").hide();
+        editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='abort-edit-card-button' onclick='abortEditCardDetails()'>Abbrechen</button>");
+    }
+    
+    // abort editing of card details -> revert to original data
+    function abortEditCardDetails() {
+        var editedCardChildren = $(event.target).parent().parent().find("#card_table").children();
+        for(var i = 0; i < editedCardChildren.length; i ++){
+            $($(editedCardChildren[i]).children()[1]).replaceWith("<td>" + cardDetailsBackup[i] + "</td>");
+        }
+        editedCardChildren.parent().parent().find("#edit-card-button").show();
+        editedCardChildren.parent().parent().find("#delete-card-button").show();
+        editedCardChildren.parent().parent().find("#abort-edit-card-button").remove();
     }
 
     function deleteCard() {
