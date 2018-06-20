@@ -142,7 +142,7 @@
 
     function addButtonsToCard(card) {
         var divButtons = $("<div>").attr("id", "card-buttons");
-        var editButton = $("<button type='button' id='edit-card-button' onclick='editCardDetails()'>Bearbeiten</button>");
+        var editButton = $("<button type='button' id='edit-card-button' onclick='editCardDetails(event)'>Bearbeiten</button>");
         var delButton = $("<button type='button' id='delete-card-button' onclick='deleteCard()'>Löschen</button>");
         $(divButtons).append(editButton);
         $(divButtons).append(delButton);
@@ -167,7 +167,7 @@
 
     // edit card button logic
     var cardDetailsBackup = [];
-    function editCardDetails() {
+    function editCardDetails(event) {
         var editedCardChildren = $(event.target).parent().parent().find("#card_table").children();
         for(var i = 0; i < editedCardChildren.length; i ++){
             var fieldData = $(editedCardChildren[i]).children()[1].innerText;
@@ -177,11 +177,11 @@
         }
         editedCardChildren.parent().parent().find("#edit-card-button").hide();
         editedCardChildren.parent().parent().find("#delete-card-button").hide();
-        editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='abort-edit-card-button' onclick='abortEditCardDetails()'>Abbrechen</button>");
+        editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='abort-edit-card-button' onclick='abortEditCardDetails(event)'>Abbrechen</button>");
     }
     
     // abort editing of card details -> revert to original data
-    function abortEditCardDetails() {
+    function abortEditCardDetails(event) {
         var editedCardChildren = $(event.target).parent().parent().find("#card_table").children();
         for(var i = 0; i < editedCardChildren.length; i ++){
             $($(editedCardChildren[i]).children()[1]).replaceWith("<td>" + cardDetailsBackup[i] + "</td>");
