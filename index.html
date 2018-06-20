@@ -103,8 +103,6 @@
     function createBS4card(data) { // update card appending using jquery (see display notes 22 lines below)
 
         // create div for card
-        //var currentCard = document.createElement("div");
-        //currentCard.setAttribute("class", "card column");
         var currentCard = $("<div>").addClass("card column");
         
         // table for card
@@ -132,7 +130,6 @@
 
         // display notes
         cardTable.append($("<tr id='customer-name'><td>Notizen/Inhalt:</td><td><pre class='card-text'><small class = 'text-muted'>" + data.details + "</small></pre></td></tr>"));
-        //var currentCardNote = $("<pre class='card-text'></pre>").append($("<small class='text-muted'></small>").text("Notizen/Inhalt: " + data.details)); // <pre> used to correctly interpret newline
 
         // append all to card
         $(currentCard).append(cardTable);
@@ -170,11 +167,19 @@
     function editCardDetails(event) {
         var editedCardChildren = $(event.target).parent().parent().find("#card_table").children();
         for(var i = 0; i < editedCardChildren.length; i ++){
-            var fieldData = $(editedCardChildren[i]).children()[1].innerText;
-            cardDetailsBackup[i] = fieldData;
-            var textField = $("<input type='text'>").val(fieldData);
-            $($(editedCardChildren[i]).children()[1]).replaceWith(textField);
+            cardDetailsBackup[i] = $(editedCardChildren[i]).children()[1].innerText;
         }
+        var textField = $("<input type='text'>").val(cardDetailsBackup[0]);
+        $($(editedCardChildren[0]).children()[1]).replaceWith(textField);
+        
+        var radioButtonsCommType = $("<div id='edit-card-commtype-radio-group'>");    
+        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-tel'>").text("Telefon"));
+        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-mail>").text("E-Mail"));
+        
+        $($(editedCardChildren[1]).children()[1]).replaceWith(radioButtonsCommType);
+        if(cardDetailsBackup[1] == "Anruf") $("#edit-commtype-tel").prop("checked", true);
+        else if(cardDetailsBackup[1] == "E-Mail") $("#edit-commtype-mail").prop("checked", true);
+        
         editedCardChildren.parent().parent().find("#edit-card-button").hide();
         editedCardChildren.parent().parent().find("#delete-card-button").hide();
         editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='abort-edit-card-button' onclick='abortEditCardDetails(event)'>Abbrechen</button>");
