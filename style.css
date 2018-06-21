@@ -148,10 +148,110 @@ header img {
     position: relative;
     bottom: 0px;
     margin: 5px;
+    border: none;
+    padding: 5px;
+    color: #696969;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card button:hover {
+    background-color: #696969;
+    color: white;
+    cursor: pointer;
 }
 
 .card td {
     padding-left: 10px;
     padding-right: 10px;
+<<<<<<< HEAD
+}
+
+.change_view {
+    padding: 15px;
+}
+
+.change_view button {
+    padding: 0px;
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: none;
+}
+
+.change_view button:hover {
+    box-shadow: 0 0 10px 4px #696969;
+    cursor: pointer;
+}
+
+.change_view img {
+    height: 25px;
+    width: 25px;
+}
+
+#add_card {
+    color: #696969;
+    font-size: 40px;
+    vertical-align: middle;
+    line-height: 0px;
+}
+
+#add_event_data {
+    padding-left: 15px;
+    grid-template-columns: 20% 1fr;
+}
+
+#add_event_data input[type="radio"] {
+    margin-left: 20px;
+}
+
+#add_event_data input[type="text"], input[type="datetime-local"], textarea {
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 200px;
+}
+
+#add_event_data button {
+    border: none;
+    padding: 5px;
+    color: #696969;
+    background-color: white;
+    width: 120px;
+    margin-top: 20px;
+}
+
+#add_event_data button:hover {
+    background-color: #696969;
+    color: white;
+    cursor: pointer;
+}
+
+#add_event_data_table th {
+    font-weight: normal;
+}
+
+#add_event_data p {
+    font-weight: bold;
+    font-size: 20px;
+    color: #696969;
+}
+
+#add_event_btn {
+    padding: 5px;
+    width: 120px;
+    border: none;
+    background-color: #696969;
+    color: white;
+    margin-top: 20px;
+}
+
+#add_event_btn:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #696969;
+=======
     vertical-align: top;
+>>>>>>> c05301f669a76a7f9d2f239e0680a19851833d84
 }

@@ -28,12 +28,35 @@
     </header>
     <main class="backgroundgrad">
         <input class="form-control" id="searchbar" type="text" placeholder="Search Communication...">
-        <button onclick="listView()"> List</button>
-        <button onclick="gridView()"> Grid</button>
-        <button type="button" id="add_card" onclick="showAddEventForm()">Event hinzufügen</button>
+        <div class="change_view">
+        <button onclick="listView()"><img src="./list.svg" alt="List"></button>
+        <button onclick="gridView()"><img src="./grid.svg" alt="Grid"></button>
+        <button type="button" id="add_card" onclick="showAddEventForm()">+</button>
+        </div>    
         <form id="add_event_data" name="event_data">
             <p>Kommunikationsevent hinzufügen</p>
-            Name des Kontaktes: <input type="text" id="contact_name" maxlength=80 name="customer_name"><br> Kontaktweg: <input type="radio" id="contact_tel" name="contact_method[]"> Telefon <input type="radio" id="contact_mail" name="contact_method[]"> E-Mail<br> Datum und Uhrzeit: <input type="datetime-local" id="contact_datetime"><br> Bearbeitet von: <input type="text" id="contact_internal" name="user"><br> Notizen: <textarea id="contact_notes" rows="4"></textarea><br>
+            <table id="add_event_data_table">
+                <tr>
+                    <th>Name des Kontaktes:</th>
+                    <td><input type="text" id="contact_name" maxlength=80 name="customer_name"></td>
+                </tr> 
+                <tr>
+                    <th>Kontaktweg:</th> 
+                    <td><input type="radio" id="contact_tel" name="contact_method"> Telefon<br> <input type="radio" id="contact_mail" name="contact_method"> E-Mail</td>
+                </tr> 
+                <tr>
+                    <th>Datum und Uhrzeit:</th> 
+                    <td><input type="datetime-local" id="contact_datetime"></td>
+                </tr> 
+                <tr>
+                    <th>Bearbeitet von:</th>
+                    <td><input type="text" id="contact_internal" name="user"></td>
+                </tr> 
+                <tr>
+                    <th>Notizen:</th>
+                    <td><textarea id="contact_notes" rows="4"></textarea></td>
+                </tr>
+            </table>
             <input type="submit" id="add_event_btn" value="Hinzufügen">
             <button type="button" id="abort_add_event_btn" onclick="hideAddEventForm()">Abbrechen</button>
             <button type="button" id="reset_form" onclick="resetAddEventForm()">Zurücksetzen</button>
@@ -69,7 +92,7 @@
         </div>
     </main>
     <footer class="backgroundgrad">
-        <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+        <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </footer>
 </body>
 <script type="text/javascript">
@@ -185,15 +208,15 @@
         else if(cardDetailsBackup[1] == "E-Mail") $("#edit-commtype-mail").prop("checked", true);
         
         // radio buttons for customer type
-        /*var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
+        var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-curr'><label for='edit-custtype-curr'>aktuell</label>"));
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-prsp'><label for='edit-custtype-prsp'>voraussichtlich</label>"));
         $($(editedCardChildren[2]).children()[1]).replaceWith(radioButtonsCustType);
         if(cardDetailsBackup[2] == "bereits Kunde") $("#edit-custtype-curr").prop("checked", true);
-        else if(cardDetailsBackup[2] == "voraussichtlicher Kunde") $("#edit-commtype-prsp").prop("checked", true);*/
+        else if(cardDetailsBackup[2] == "voraussichtlicher Kunde") $("#edit-commtype-prsp").prop("checked", true);
         
         // datetime-picker for communication time and date
-        var datetimepicker = $("<input type='datetime-local'>").val(Date.parse(data.commDate));
+        var datetimepicker = $("<input type='datetime-local'>").val("2014-01-02T11:42:13.510");
         $($(editedCardChildren[3]).children()[1]).replaceWith(datetimepicker);
         
         // manage buttons
