@@ -29,9 +29,9 @@
     <main class="backgroundgrad">
         <input class="form-control" id="searchbar" type="text" placeholder="Search Communication...">
         <div class="change_view">
-        <button onclick="listView()"><img src="./list.svg" alt="List"></button>
-        <button onclick="gridView()"><img src="./grid.svg" alt="Grid"></button>
-        <button type="button" id="add_card" onclick="showAddEventForm()">+</button>
+            <button onclick="listView()"><img src="./list.svg" alt="List"></button>
+            <button onclick="gridView()"><img src="./grid.svg" alt="Grid"></button>
+            <button type="button" id="add_card" onclick="showAddEventForm()">+</button>
         </div>    
         <form id="add_event_data" name="event_data">
             <p>Kommunikationsevent hinzufügen</p>
@@ -62,39 +62,13 @@
             <button type="button" id="reset_form" onclick="resetAddEventForm()">Zurücksetzen</button>
             <!-- INLINE JS POSSIBLE? -->
         </form>
-        <div class="row" id="bs4cards">
-            <div class="card column" id="hardcoded">
-                <h5 class="card-title">Hardcoded Test Company</h5>
-                <div class="card-text">Anruf</div>
-                <div class="card-text"><small class="text-muted">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</small></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column">
-                <h2>Column 1</h2>
-                <p>Some text..</p>
-            </div>
-            <div class="column">
-                <h2>Column 2</h2>
-                <p>Some text..</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="column">
-                <h2>Column 3</h2>
-                <p>Some text..</p>
-            </div>
-            <div class="column">
-                <h2>Column 4</h2>
-                <p>Some text..</p>
-            </div>
-        </div>
+        <div class="row" id="bs4cards"></div>
     </main>
     <footer class="backgroundgrad">
         <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </footer>
 </body>
+    
 <script type="text/javascript">
     getData();
     notification("info", "Daten geladen.");
@@ -118,7 +92,10 @@
     // Grid View
     function gridView() {
         for (var i = 0; i < elements.length; i++) {
-            elements[i].style.width = "40%";
+            elements[i].style.width = "10cm";
+            elements[i].style.float = "left";
+            elements[i].style.padding = "10px";
+            elements[i].style.margin = "2%";
         }
         notification("success", "Hurra! Kacheln!");
     }
@@ -139,7 +116,7 @@
         if (data.type == 2) commType = "Anruf";
         else if (data.type == 3) commType = "E-Mail";
         else commType = "Andere";
-        cardTable.append($("<tr id='customer-commtype'><td>CommType:</td><td>" + commType + "</td></tr>"));
+        cardTable.append($("<tr id='customer-commtype'><td>Kommunikationstyp:</td><td>" + commType + "</td></tr>"));
         
         // display customer type
         var custType = "";
