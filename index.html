@@ -65,7 +65,9 @@
         <div class="row" id="bs4cards"></div>
     </main>
     <footer class="backgroundgrad">
-        <div id="iconref">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+        <div id="iconref">
+            Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+        </div>
     </footer>
 </body>
     
@@ -177,16 +179,22 @@
         
         // radio buttons for communication type
         var radioButtonsCommType = $("<div id='edit-card-commtype-radio-group'>");    
-        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-tel'><label for='edit-commtype-tel'>Telefon</label>"));
+        radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-tel'><label for='edit-commtype-tel'>Telefon</label><br>"));
         radioButtonsCommType.append($("<input type='radio' name='edit-card-radio-commtype' id='edit-commtype-mail'><label for='edit-commtype-mail'>E-Mail</label>"));
         $($(editedCardChildren[1]).children()[1]).replaceWith(radioButtonsCommType);
         if(cardDetailsBackup[1] == "Anruf") $("#edit-commtype-tel").prop("checked", true);
         else if(cardDetailsBackup[1] == "E-Mail") $("#edit-commtype-mail").prop("checked", true);
         
         // radio buttons for customer type
+<<<<<<< HEAD
         /*var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-curr'><label for='edit-custtype-curr'>aktuell</label>"));
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-prsp'><label for='edit-custtype-prsp'>voraussichtlich</label>"));
+=======
+        var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
+        radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-curr'><label for='edit-custtype-curr'>bereits Kunde</label><br>"));
+        radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-prsp'><label for='edit-custtype-prsp'>voraussichtlicher Kunde</label>"));
+>>>>>>> af6e577f6cdf0ce9ca31445b52697f1a222770ea
         $($(editedCardChildren[2]).children()[1]).replaceWith(radioButtonsCustType);
         if(cardDetailsBackup[2] == "bereits Kunde") $("#edit-custtype-curr").prop("checked", true);
         else if(cardDetailsBackup[2] == "voraussichtlicher Kunde") $("#edit-commtype-prsp").prop("checked", true);*/
