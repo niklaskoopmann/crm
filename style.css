@@ -101,7 +101,7 @@ a:hover{
 
     .card input[type="text"], textarea, input[type="datetime-local"],#edit-card-commtype-radio-group, td{
         float: right;
-        width: 5cm;
+        width: 90%;
     }
 
     .card label{
@@ -111,12 +111,12 @@ a:hover{
 
     .card th {
         vertical-align: top;
-        width: 3cm;
+        width: 30%;
         padding-bottom: 10px;
     }
 
 #card-buttons {
-   grid-row: 2 / span 1; 
+   grid-row: 2 / span 1;
 }
 
 .change_view {
