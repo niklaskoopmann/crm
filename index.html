@@ -184,20 +184,21 @@
         else if(cardDetailsBackup[1] == "E-Mail") $("#edit-commtype-mail").prop("checked", true);
         
         // radio buttons for customer type
-        var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
+        /*var radioButtonsCustType = $("<div id='edit-card-custtype-radio-group'>");
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-curr'><label for='edit-custtype-curr'>aktuell</label>"));
         radioButtonsCustType.append($("<input type='radio' name='edit-card-radio-custtype' id='edit-custtype-prsp'><label for='edit-custtype-prsp'>voraussichtlich</label>"));
         $($(editedCardChildren[2]).children()[1]).replaceWith(radioButtonsCustType);
         if(cardDetailsBackup[2] == "bereits Kunde") $("#edit-custtype-curr").prop("checked", true);
-        else if(cardDetailsBackup[2] == "voraussichtlicher Kunde") $("#edit-commtype-prsp").prop("checked", true);
+        else if(cardDetailsBackup[2] == "voraussichtlicher Kunde") $("#edit-commtype-prsp").prop("checked", true);*/
         
         // datetime-picker for communication time and date
-        var datetimepicker = $("<input type='datetime-local'>").val("2014-01-02T11:42:13.510");
+        var datetimepicker = $("<input type='datetime-local'>").val("");
         $($(editedCardChildren[3]).children()[1]).replaceWith(datetimepicker);
         
         // manage buttons
         editedCardChildren.parent().parent().find("#edit-card-button").hide();
         editedCardChildren.parent().parent().find("#delete-card-button").hide();
+        editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='save-edit-card-button' onclick='saveEditCardDetails(event)'>Speichern</button>");
         editedCardChildren.parent().parent().find("#card-buttons").append("<button type='button' id='abort-edit-card-button' onclick='abortEditCardDetails(event)'>Abbrechen</button>");
     }
     
@@ -210,6 +211,7 @@
         editedCardChildren.parent().parent().find("#edit-card-button").show();
         editedCardChildren.parent().parent().find("#delete-card-button").show();
         editedCardChildren.parent().parent().find("#abort-edit-card-button").remove();
+        editedCardChildren.parent().parent().find("#save-edit-card-button").remove();
     }
 
     function deleteCard() {
