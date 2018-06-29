@@ -95,7 +95,24 @@ a:hover{
         }
     
     .card td {
-        padding: 0 10px 0 10px;
+        padding-right: 10px;
+        vertical-align: top;
+    }
+
+    .card input[type="text"], textarea, input[type="datetime-local"],#edit-card-commtype-radio-group, td{
+        float: right;
+        width: 5cm;
+    }
+
+    .card label{
+        padding-left: 10px;
+        text-align: right;
+    }
+
+    .card th {
+        vertical-align: top;
+        width: 3cm;
+        padding-bottom: 10px;
     }
 
 #card-buttons {
@@ -129,8 +146,7 @@ a:hover{
     display: grid;
     grid-template-rows: 85% 1fr;
     float: left;
-    width: 10cm; 
-    height: 10cm;
+    width: 9cm;
     padding: 10px;
     margin: 2%;
 }
