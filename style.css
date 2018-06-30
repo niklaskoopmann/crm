@@ -101,7 +101,8 @@ a:hover{
 
     .card input[type="text"], textarea, input[type="datetime-local"],#edit-card-commtype-radio-group, td{
         float: right;
-        width: 90%;
+        margin-right: 10%;
+        width: 85%;
     }
 
     .card label{

@@ -1,4 +1,4 @@
-<!-- /* @author Chiara Kramer, Niklas Koopmann, Marcus Kraft*/ --> 
+<!-- /* @author Chiara Kramer, Niklas Koopmann, Marcus Kraft*/ -->
 
 <!doctype html>
 <html lang="de">
@@ -79,8 +79,7 @@
 
 <script type="text/javascript">
     getCustcommData();
-    //getUserData();
-    
+
     var custcommJSON;
     var customerTypes;
     var custcommId = 0;
@@ -96,22 +95,102 @@
             // add new div per card
             var newTableRow = $("<div class='table_row'></div>");
             // iterate through table rows
-            elements[i].firstChild.childNodes.forEach(function(data){
+            elements[i].firstChild.childNodes.forEach(function(data) {
                 data.lastChild.textContent;
             });
             // append div to table_body
-            
+
             // TO DO!
-            
+
             elements[i].style.display = "none";
             /*var tableRows = $($(elements[i]).children()[0]).children();
             for(var j = 0; j < tableRows.length; j++) {
                 $(tableRows[j]).children()[0].style.width = "30%";
-                $(tableRows[j]).children()[1].style.width = "90%"; // backup solution
+                $(tableRows[j]).children()[1].style.width = "80%"; // backup solution
             }*/
         }
-        if(view == "grid") notification("error", "Liste, ja, aber Spalten sind to do!");
+        if (view == "grid") notification("error", "Liste, ja, aber Spalten sind to do!");
         view = "list";
+    }
+
+    // convert weird date format to normal interpretable format
+    function convertDateElement(weirdDate) {
+
+        // function assumes format MMM DD, YYYY HH:MM:SS (AM/PM) WITH leading zeroes
+        // returns date of format YYYY-MM-DDTHH:MM:SS to be parsed into a date object
+
+        var normalDate;
+
+        //Auslesen der einzelnen Teile als neue Strings
+        var MonatBuchstaben = weirdDate.substring(0, 3);
+        var Tag = weirdDate.substring(4, 6);
+        var Jahr = weirdDate.substring(8, 12);
+        var Zeit12h = weirdDate.substring(13, 21);
+        var AmPm = weirdDate.substring(22, 24);
+
+        //Umwandeln des Monats in eine Zahl
+        var MonatZahl;
+        switch (MonatBuchstaben) {
+            case "Jan":
+                MonatZahl = "01";
+                break;
+            case "Feb":
+                MonatZahl = "02";
+                break;
+            case "Mar":
+                MonatZahl = "03";
+                break;
+            case "Apr":
+                MonatZahl = "04";
+                break;
+            case "May":
+                MonatZahl = "05";
+                break;
+            case "Jun":
+                MonatZahl = "06";
+                break;
+            case "Jul":
+                MonatZahl = "07";
+                break;
+            case "Aug":
+                MonatZahl = "08";
+                break;
+            case "Sep":
+                MonatZahl = "09";
+                break;
+            case "Oct":
+                MonatZahl = "10";
+                break;
+            case "Nov":
+                MonatZahl = "11";
+                break;
+            case "Dec":
+                MonatZahl = "12";
+                break;
+            default:
+                MonatZahl = "XX";
+                break;
+        }
+
+        //Umwandeln der Zeit in das 24h-System
+        var Zeit24h;
+        var Stunden = Number(Zeit12h.substring(0, 2));
+        var StundenCopy = Stunden;
+        switch (AmPm) {
+            case "AM":
+                if(Stunden == 12) Stunden = 0;
+                Zeit24h = Zeit12h;
+                break;
+            case "PM":
+                if(Stunden != 12) Stunden = (12 + Stunden) % 24; 
+                Zeit24h = Zeit12h.replace(StundenCopy, Stunden);
+                break;
+        }
+
+        //Zusammensetzen der einzelnen Bestandteile
+        normalDate = Jahr.concat("-", MonatZahl, "-", Tag, "T", Zeit24h);
+
+        return normalDate;
     }
 
     // Grid View
@@ -122,7 +201,7 @@
             elements[i].style.padding = "10px";
             elements[i].style.margin = "2%";
         }
-        if(view == "list") notification("success", "Hurra! Kacheln!");
+        if (view == "list") notification("success", "Hurra! Kacheln!");
         view = "grid";
     }
 
@@ -215,7 +294,7 @@
         else if (cardDetailsBackup[1] == "E-Mail") $("#edit-commtype-mail").prop("checked", true);
 
         // datetime-picker for communication time and date
-        var datetimepicker = $("<input type='datetime-local'>").val("");
+        var datetimepicker = $("<input type='datetime-local'>").val(convertDateElement(cardDetailsBackup[3]));
         $($(editedCardChildren[3]).children()[1]).replaceWith(datetimepicker);
 
         // textarea for notes
@@ -250,7 +329,7 @@
     }
 
     function deleteCard() {
-        notification("error","Diese Funktion sollte die Karte und damit das Kommunikationsevent löschen können. Allerdings existiert dafür noch kein Action Code.");
+        notification("error", "Diese Funktion sollte die Karte und damit das Kommunikationsevent löschen können. Allerdings existiert dafür noch kein Action Code.");
     }
 
     // search bar logic, filter by text on cards
@@ -340,16 +419,17 @@
             notification("success", "Daten erfolgreich geladen!");
         });
     }
-    
+
     function getUserData() {
         $.get("http://h2669567.stratoserver.net:8080/intranet/user.jsp", function(data, status) {
             if (data.status != "ok") {
                 notification("error", "Datensatz User fehlerhaft!");
             }
             console.log("Data Users: \n" + JSON.stringify(data) + "\n\nStatus :\n" + status);
-            
+
         });
     }
+
 </script>
 
 </html>
