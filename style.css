@@ -252,6 +252,10 @@ pre {
     display: table-row-group;
 }
 
+.table_cell {
+    
+}
+
 #table_header{
     display: table-header-group;
     background-color: #E00019;
@@ -263,6 +267,10 @@ pre {
 #table_header p {
     vertical-align: middle;
     padding: 10px;
+}
+
+.table_row {
+    
 }
 
 .table_row:nth-child(odd) {
