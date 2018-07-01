@@ -265,12 +265,12 @@ pre {
     padding: 10px;
 }
 
-.table_row:nth-child(odd){
+.table_row:nth-child(odd) {
     background-color: #666;
     color: white;
 }
 
-.table_row:nth-child(even){
+.table_row:nth-child(even) {
     background-color: lightgray;
 }
 
