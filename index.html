@@ -28,7 +28,7 @@
         </div>
     </header>
     <main class="backgroundgrad">
-        <input class="form-control" id="searchbar" type="text" placeholder="Search Communication...">
+        <input class="form-control" id="searchbar" type="text" placeholder="Kommunikation durchsuchen...">
         <div class="change_view">
             <button onclick="listView()"><img src="./list.svg" alt="List"></button>
             <button onclick="gridView()"><img src="./grid.svg" alt="Grid"></button>
@@ -78,39 +78,90 @@
 </body>
 
 <script type="text/javascript">
+    
+    
     getCustcommData();
 
     var custcommJSON;
     var customerTypes;
     var custcommId = 0;
     var view = "grid";
+    
+    // search bar logic, filter by text on cards
+    $(document).ready(function() {
+        $("#searchbar").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            if (view == "list") {
+                $(".table_row").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            } else {
+                $(".card").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            }
 
+        });
+    });
+
+    
     // switch list grid view
     // Get the elements with class="column"
     var elements = document.getElementsByClassName("column");
-
+    
     // List View
     function listView() {
-        for (var i = 0; i < elements.length; i++) {
-            // add new div per card
-            var newTableRow = $("<div class='table_row'></div>");
-            // iterate through table rows
-            elements[i].firstChild.childNodes.forEach(function(data) {
-                data.lastChild.textContent;
+
+        if (view == "grid") {
+    
+            $("#table_header").css("display", "table-row");
+            elements[0].firstChild.childNodes.forEach(function(data) {
+                $("#table_header").append($("<p class='table_cell'>" + data.firstChild.textContent + "</p>"));
             });
-            // append div to table_body
 
-            // TO DO!
+            for (var i = 0; i < elements.length; i++) {
+                // add new div per card
+                var newTableRow = $("<div class='table_row'></div>");
+                // iterate through table rows
+                elements[i].firstChild.childNodes.forEach(function(data) {
 
-            elements[i].style.display = "none";
-            /*var tableRows = $($(elements[i]).children()[0]).children();
-            for(var j = 0; j < tableRows.length; j++) {
-                $(tableRows[j]).children()[0].style.width = "30%";
-                $(tableRows[j]).children()[1].style.width = "80%"; // backup solution
-            }*/
+                    newTableRow.append("<p class='table_cell'>" + data.lastChild.textContent + "</p>");
+                });
+                // append div to table_body
+                newTableRow.css("display", "table-row");
+                $("#table_body").append(newTableRow);
+
+                elements[i].style.display = "none";
+                /*var tableRows = $($(elements[i]).children()[0]).children();
+                for(var j = 0; j < tableRows.length; j++) {
+                    $(tableRows[j]).children()[0].style.width = "30%";
+                    $(tableRows[j]).children()[1].style.width = "80%"; // backup solution
+                }*/
+            }
+
+            $(".table_cell").css("display", "table-cell");
+            notification("success", "Hurra! Liste! (Tabelle stylen)");
         }
-        if (view == "grid") notification("error", "Liste, ja, aber Spalten sind to do!");
         view = "list";
+    }
+
+    // Grid View
+    function gridView() {
+
+        // delete all children of #table_header and #table_body
+        $("#table_header").empty();
+        $("#table_body").empty();
+
+        for (var i = 0; i < elements.length; i++) {
+
+            elements[i].style.display = "initial";
+            elements[i].style.width = "9cm";
+            elements[i].style.float = "left";
+            elements[i].style.padding = "10px";
+            elements[i].style.margin = "2%";
+        }
+        if (view == "list") notification("success", "Hurra! Kacheln!");
+        view = "grid";
     }
 
     // convert weird date format to normal interpretable format
@@ -178,11 +229,11 @@
         var StundenCopy = Stunden;
         switch (AmPm) {
             case "AM":
-                if(Stunden == 12) Stunden = 0;
+                if (Stunden == 12) Stunden = 0;
                 Zeit24h = Zeit12h;
                 break;
             case "PM":
-                if(Stunden != 12) Stunden = (12 + Stunden) % 24; 
+                if (Stunden != 12) Stunden = (12 + Stunden) % 24;
                 Zeit24h = Zeit12h.replace(StundenCopy, Stunden);
                 break;
         }
@@ -191,18 +242,6 @@
         normalDate = Jahr.concat("-", MonatZahl, "-", Tag, "T", Zeit24h);
 
         return normalDate;
-    }
-
-    // Grid View
-    function gridView() {
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.width = "9cm";
-            elements[i].style.float = "left";
-            elements[i].style.padding = "10px";
-            elements[i].style.margin = "2%";
-        }
-        if (view == "list") notification("success", "Hurra! Kacheln!");
-        view = "grid";
     }
 
     function createBS4card(data) { // update card appending using jquery (see display notes 22 lines below)
@@ -214,27 +253,27 @@
         var cardTable = $("<table>").attr("id", "card_table");
 
         // card header (customer)
-        cardTable.append($("<tr id='customer-name'><th>Name:</th><td>" + data.customer.name + "</td></tr>"));
+        cardTable.append($("<tr id='customer-name'><th>Name</th><td>" + data.customer.name + "</td></tr>"));
 
         // set communication type in card
         var commType = "";
         if (data.type == 2) commType = "Anruf";
         else if (data.type == 3) commType = "E-Mail";
         else commType = "Andere";
-        cardTable.append($("<tr id='customer-commtype'><th>Kom&shy;mu&shy;ni&shy;ka&shy;ti&shy;ons&shy;typ:</th><td>" + commType + "</td></tr>"));
+        cardTable.append($("<tr id='customer-commtype'><th>Kom&shy;mu&shy;ni&shy;ka&shy;ti&shy;ons&shy;typ</th><td>" + commType + "</td></tr>"));
 
         // display customer type
         var custType = "";
         if (data.customer.type == 1) custType = "bereits Kunde";
         else if (data.customer.type == 2) custType = "voraussichtlicher Kunde";
         else custType = "Andere";
-        cardTable.append($("<tr id='customer-type'><th>Art:</th><td>" + custType + "</td></tr>"));
+        cardTable.append($("<tr id='customer-type'><th>Art</th><td>" + custType + "</td></tr>"));
 
         // display communication date
-        cardTable.append($("<tr id='customer-datetime'><th>Datum und Uhr&shy;zeit:</th><td>" + data.commDate + "</td></tr>"));
+        cardTable.append($("<tr id='customer-datetime'><th>Datum und Uhr&shy;zeit</th><td>" + data.commDate + "</td></tr>"));
 
         // display notes
-        cardTable.append($("<tr id='customer-name'><th>Notizen:</th><td><pre class='card-text'><small class = 'text-muted'>" + data.details + "</small></pre></td></tr>"));
+        cardTable.append($("<tr id='customer-name'><th>Notizen</th><td><pre class='card-text'><small class = 'text-muted'>" + data.details + "</small></pre></td></tr>"));
 
         // append all to card
         $(currentCard).append(cardTable);
@@ -332,16 +371,6 @@
         notification("error", "Diese Funktion sollte die Karte und damit das Kommunikationsevent löschen können. Allerdings existiert dafür noch kein Action Code.");
     }
 
-    // search bar logic, filter by text on cards
-    $(document).ready(function() {
-        $("#searchbar").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $(".card").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-
     function notification(type, msg) {
         $("#alertbox").empty();
         var box = document.createElement("div");
@@ -429,7 +458,6 @@
 
         });
     }
-
 </script>
 
 </html>

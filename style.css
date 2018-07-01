@@ -99,7 +99,7 @@ a:hover{
         vertical-align: top;
     }
 
-    .card input[type="text"], textarea, input[type="datetime-local"],#edit-card-commtype-radio-group, td{
+    .card input[type="text"], .card textarea, .card input[type="datetime-local"], #edit-card-commtype-radio-group, .card td{
         float: right;
         margin-right: 10%;
         width: 85%;
@@ -193,6 +193,15 @@ header img {
            color: #E00019; 
         }
 
+#list_view {
+    display: table;
+}
+
+    #list_view p {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
 nav {
     padding: 5px 0 5px 0;
     white-space: nowrap;
@@ -237,6 +246,32 @@ pre {
     margin: 10px;
     clear: both;
     content: "";
+}
+
+#table_body{
+    display: table-row-group;
+}
+
+#table_header{
+    display: table-header-group;
+    background-color: #E00019;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+}
+
+#table_header p {
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.table_row:nth-child(odd){
+    background-color: #666;
+    color: white;
+}
+
+.table_row:nth-child(even){
+    background-color: lightgray;
 }
 
 #welcome {
