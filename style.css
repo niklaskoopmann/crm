@@ -195,6 +195,8 @@ header img {
 
 #list_view {
     display: table;
+    width: 100%;
+    padding: 10px;
 }
 
     #list_view p {
@@ -252,8 +254,9 @@ pre {
     display: table-row-group;
 }
 
-.table_cell {
-    
+.table_cell {
+    padding: 10px;
+    vertical-align: middle;
 }
 
 #table_header{
@@ -264,21 +267,17 @@ pre {
     text-align: center;
 }
 
-#table_header p {
-    vertical-align: middle;
-    padding: 10px;
-}
+    #table_header p {
+        vertical-align: middle;
+        background-color: #696969;
+        color: white;
+    }
 
-.table_row {
+.table_row:nth-child(odd){
+    background-color: white;
+}
     
-}
-
-.table_row:nth-child(odd) {
-    background-color: #666;
-    color: white;
-}
-
-.table_row:nth-child(even) {
+.table_row:nth-child(even){ 
     background-color: lightgray;
 }
 
